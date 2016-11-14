@@ -1,0 +1,10 @@
+*.class
+*.pyc
+*.pyo
+.project
+.pydevproject
+local_settings.py
+*.*~
+offdock/media/*
+offdock/static/*
+offdock/wsgi.py
