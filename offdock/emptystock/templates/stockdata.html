@@ -1,0 +1,58 @@
+{% extends "base.html" %} 
+{% block 'content' %}
+
+<p>{{ subtitle }}</p>
+
+<hr>
+
+{% regroup stock_simple_data by size as stock_simple_data_by_size %}
+{% for item in stock_simple_data_by_size %}
+<ul class="list-unstyled">
+	<li>
+		<strong>{{ item.grouper }}</strong>
+		<ul>
+		{% for line in item.list %}
+			<li>
+				{{ line.line }}
+			</li>
+		{% endfor %}
+		</ul>
+	</li>
+</ul>
+{% endfor %}
+
+<hr>
+
+  {% regroup stock_data by reinforced as stock_data_by_reinforced %}
+  <ul class="list-unstyled">
+  {% for reinforced in stock_data_by_reinforced %}    
+    <li>
+        
+    <h3>
+    {% if reinforced.grouper %}    
+    Услиленный    
+    {% else %}
+    Без усиления    
+    {% endif %}
+    </h3>
+    
+    
+    <ul class="list-unstyled">    
+    {% regroup reinforced.list by sizetype as reinforced_by_sizetype %}    	    
+        {% for sizetype in reinforced_by_sizetype %}        
+          <li><strong>{{ sizetype.grouper }}</strong>
+          <ul>
+          {% for row in sizetype.list %}
+            <li>{{ row.line }}  <span class="badge">{{ row.rest|floatformat }}</span></li>       
+          {% endfor %}
+          </ul>          
+          </li>
+    {% endfor %}
+    </ul>
+    </li>      
+  {% endfor %}  
+  </ul>
+
+<hr> 
+ 
+{% endblock 'content' %}

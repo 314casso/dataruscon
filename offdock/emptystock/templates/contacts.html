@@ -1,0 +1,45 @@
+{% extends "base.html" %} 
+{% load static from staticfiles %}
+{% load thumbnail %}
+
+{% block 'content' %}
+
+<p>{{ subtitle }}</p>
+
+<hr>
+
+
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-6">
+
+{% for person in persons %}
+      <div class="business-card">
+          <div class="media">
+              <div class="media-left">
+              {% if person.foto %}              	
+              	<img class="media-object profile-img" src="{% thumbnail person.foto 200x200 crop %}" alt="" />
+              {% else %}
+              	<img class="media-object profile-img" src="{% static 'images/avatar200x200.png' %}" alt="" />
+              {% endif %}         	
+              </div>
+              <div class="media-body">
+              	  <h2>{{ person.last_name }}</h2>
+                  <h3 class="media-heading">                  
+                  {{ person.first_name }}
+                  {{ person.middle_name }}
+                  </h3>
+                  <div class="job">{{ person.position }}</div>
+                  {% for contact in person.contact_set.all %}
+                  	<div class="mail">{{ contact.contact }}</div>							
+				  {% endfor %}                        
+              </div>
+          </div>
+      </div>
+{% endfor %}
+
+</div>	
+</div>
+
+
+ 
+{% endblock 'content' %}

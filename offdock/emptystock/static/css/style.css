@@ -1,0 +1,17 @@
+/*Business Card Css */
+.business-card {  
+	background: #f8f8f8; 
+	box-shadow: 1px 1px 8px #d8d8d8;    
+}
+
+.profile-img {
+  background: white;
+}
+.job {
+  color: #999;
+  font-size: 18px;
+}
+.mail {
+  font-size: 16px;
+ } 
+ 
