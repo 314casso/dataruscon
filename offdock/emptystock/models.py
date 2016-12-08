@@ -28,7 +28,19 @@ class Contact(models.Model):
     )
     contact = models.CharField(max_length=50)    
     type = models.IntegerField(choices=TYPE_CHOICES, default=PHONE)
-    person = models.ForeignKey(Person)    
+    person = models.ForeignKey(Person)
+    
+    def type_protocol(self):
+        mapper = {
+                  self.EMAIL: 'mailto',
+                  self.PHONE: 'tel',
+                  self.FAX: 'tel',
+                  }
+        if self.type in mapper:
+            return mapper.get(self.type)
+        
+        
+        
     class Meta:        
         unique_together = ("contact", "type")
     def __unicode__(self):

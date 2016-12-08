@@ -30,7 +30,7 @@
                   </h3>
                   <div class="job">{{ person.position }}</div>
                   {% for contact in person.contact_set.all %}
-                  	<div class="mail">{{ contact.contact }}</div>							
+                  	<a href="{{ contact.type_protocol }}:{{ contact.contact }}">{{ contact.contact }}</a>							
 				  {% endfor %}                        
               </div>
           </div>
