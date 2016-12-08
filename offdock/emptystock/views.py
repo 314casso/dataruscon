@@ -6,7 +6,7 @@ from offdock.local_settings import WEB_SERVISES, EMAIL_FEEDBACK,\
 from django.utils.encoding import force_unicode
 from datetime import datetime
 from django.views.decorators.http import require_http_methods
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import csrf_exempt
 from django.template import loader, Context
 from django.core.mail import EmailMessage
 from django.contrib.sites.models import get_current_site
@@ -39,7 +39,7 @@ def contacts(request):
 
 
 @require_http_methods(["POST"])
-@ensure_csrf_cookie
+@csrf_exempt
 def send_email(request):
     mailto = EMAIL_FEEDBACK    
     t = loader.get_template('email.txt')
