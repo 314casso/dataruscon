@@ -34,5 +34,5 @@ class StockDataService(BaseService):
         for row in rows: 
             parts = row.split()
             result.append({'size': parts[0], 'line': parts[1]})
-        return result
+        return sorted(result, key=lambda k: k['size']) 
         

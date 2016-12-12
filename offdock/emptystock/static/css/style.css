@@ -9,14 +9,13 @@
 }
 .job {
   color: #999;
-  font-size: 18px;
+  font-size: 18px; 
 }
-.mail {
-  font-size: 16px;
-} 
- 
-a[href^="tel:"]:before {
-    content: "\260E";
-    display: inline-block;
-    margin-right: 0.5em;
+
+.contact {	
+	font-size: 16px;
+}
+
+.avatar {
+	padding: 10px;
 }
