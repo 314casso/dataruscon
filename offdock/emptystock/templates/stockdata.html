@@ -1,9 +1,10 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
+{% load cache %} 
 {% block 'content' %}
 
 <p>{{ subtitle }}</p>
 
-<hr>
+{% if false %}
 
 {% regroup stock_simple_data by size as stock_simple_data_by_size %}
 <ul class="list-unstyled">
@@ -20,8 +21,9 @@
 	</li>
 {% endfor %}
 </ul>
+{% endif %}
 
-<hr>
+{% cache 100 stock_data_by_reinforced %}
 
   {% regroup stock_data by reinforced as stock_data_by_reinforced %}
   <ul class="list-unstyled">
@@ -53,6 +55,7 @@
   {% endfor %}  
   </ul>
 
-<hr> 
+{% endcache %}
+ 
  
 {% endblock 'content' %}

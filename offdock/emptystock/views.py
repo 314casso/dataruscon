@@ -14,14 +14,13 @@ from django.http import HttpResponse
 from emptystock.models import Person
 
 
-
 def stockdata(request):    
     stock_data_service = StockDataService(WEB_SERVISES['stockdata'])
     stock_data = stock_data_service.get_data()    
     stock_simple_data = stock_data_service.get_simple_data()
     context = {
                'title' : force_unicode('Терминал Рускон'),
-               'subtitle' : force_unicode('Прием порожних контейнеров на {:%d.%m.%Y}'.format(datetime.now())),
+               'subtitle' : force_unicode('Прием порожних контейнеров на {:%d.%m.%Y %H:%M}'.format(datetime.now())),
                'stock_data' : stock_data,
                'stock_simple_data': stock_simple_data,
               }     
@@ -40,8 +39,7 @@ def contacts(request):
 
 @require_http_methods(["POST"])
 @csrf_exempt
-def send_email(request):
-    mailto = EMAIL_FEEDBACK    
+def send_email(request):        
     t = loader.get_template('email.txt')
     c = Context(request.POST)
     c.update({'site': get_current_site(request)})    
@@ -50,7 +48,7 @@ def send_email(request):
         force_unicode('Обращение через сайт'),
         force_unicode(rendered),
         DEFAULT_FROM_EMAIL,
-        [mailto]        
+        EMAIL_FEEDBACK        
     )
     email.send(False)
     return HttpResponse('SUCCESS')    
