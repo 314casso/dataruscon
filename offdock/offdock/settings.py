@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 
 gettext = lambda s: s
 
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 
-DEBUG = True
+DEBUG = (len(sys.argv) > 1 and sys.argv[1] == 'runserver')
+
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
