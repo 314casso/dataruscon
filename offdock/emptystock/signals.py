@@ -20,9 +20,7 @@ def send_sms(message, target):
                'message': message,
                'target': target               
                }    
-    r = requests.post(beeline['URL'], auth=(beeline['USER'], beeline['PASSWORD']), data=data)
-    print r.status_code
-    print r.text
+    r = requests.post(beeline['URL'], auth=(beeline['USER'], beeline['PASSWORD']), data=data)    
     return r
 
 
