@@ -57,6 +57,21 @@ def send_email(request):
     return HttpResponse('SUCCESS')
 
 
+def authenticate_user(uname, passwd, request):
+    user = authenticate(username=uname, password=passwd)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            request.user = user
+
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
 @csrf_exempt
 @require_http_methods(["POST"])
 def get_sms(request):  
@@ -67,11 +82,11 @@ def get_sms(request):
             #
             if auth[0].lower() == "basic":
                 uname, passwd = base64.b64decode(auth[1]).split(':')
-                user = authenticate(username=uname, password=passwd)
-                if user is not None:
-                    if user.is_active:
-                        login(request, user)
-                        request.user = user
+                authenticate_user(uname, passwd, request)
+    elif 'LOGIN' in request.POST:                
+        login = request.POST['LOGIN']
+        if login == SMS_SERVICE['emptystock']['USER']:
+            authenticate_user(login, SMS_SERVICE['emptystock']['PASSWORD'], request)
     
     if not request.user.is_authenticated():
         import logging
@@ -86,7 +101,4 @@ def get_sms(request):
         return HttpResponse('Accepted', status=202)
     else:
         return HttpResponse(u'\n'.join([u'\n'.join(errors) for field, errors in form.errors.items()]), status=422)  # @UnusedVariable
-    return HttpResponse('Bad Request', status=400)
- 
-    
-    
+    return HttpResponse('Bad Request', status=400)    

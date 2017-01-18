@@ -57,9 +57,9 @@ class Sms(models.Model):
     )
       
     date = models.DateTimeField(auto_now_add=True, blank=True)     
-    ordid = models.CharField('ID сообщения', max_length=50, unique=True, db_index=True) 
-    cnrid = models.CharField('Номер конрагента', max_length=50, null=True, blank=True) 
-    sibnum = models.CharField('ID входящего ящика', max_length=255, null=True, blank=True) 
+    smsid = models.CharField('SMS ID', max_length=50, db_index=True) 
+    agtid = models.CharField('AGT ID', max_length=50, null=True, blank=True) 
+    inbox = models.CharField('ID входящего ящика', max_length=255, null=True, blank=True) 
     sender = models.CharField('Номер отправителя', max_length=255)
     target = models.CharField('Номер получателя', max_length=255)
     rescount = models.CharField('Количество для тарификации', max_length=50, null=True, blank=True) 
