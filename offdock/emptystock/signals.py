@@ -19,7 +19,8 @@ def sendsms(message, target, sms_service_name):
                'pass': sms_service['PASSWORD'],
                'action': 'post_sms',               
                'message': message,
-               'target': target               
+               'target': target,
+               'sender': sms_service['SENDER']               
                }    
     r = requests.post(sms_service['URL'], auth=(sms_service['USER'], sms_service['PASSWORD']), data=data)    
     return r
