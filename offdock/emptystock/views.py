@@ -74,6 +74,9 @@ def get_sms(request):
                         request.user = user
     
     if not request.user.is_authenticated():
+        import logging
+        logger = logging.getLogger('django.request')
+        logger.error(request.META)
         return HttpResponse(request.META, status=401)       
       
     form = SmsForm(request.POST)    
