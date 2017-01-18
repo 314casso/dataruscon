@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 import os
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_unicode 
 
 def get_upload_path(instance, filename):
     return os.path.join(
@@ -39,11 +39,33 @@ class Contact(models.Model):
         if self.type in mapper:
             return mapper.get(self.type)
         
-        
-        
     class Meta:        
         unique_together = ("contact", "type")
     def __unicode__(self):
         return u'{0} {1}'.format(self.get_type_display(), self.contact) 
-        
+
+
+class Sms(models.Model):
+    NEW = 1
+    PROCESSED = 2
+    ERROR = 3
     
+    STATUS_CHOICES = (
+        (NEW, force_unicode('Новое')),
+        (PROCESSED, force_unicode('Обработано')),
+        (ERROR, force_unicode('Обшибка')),        
+    )
+      
+    date = models.DateTimeField(auto_now_add=True, blank=True)     
+    ordid = models.CharField('ID сообщения', max_length=50, unique=True, db_index=True) 
+    cnrid = models.CharField('Номер конрагента', max_length=50, null=True, blank=True) 
+    sibnum = models.CharField('ID входящего ящика', max_length=255, null=True, blank=True) 
+    sender = models.CharField('Номер отправителя', max_length=255)
+    target = models.CharField('Номер получателя', max_length=255)
+    rescount = models.CharField('Количество для тарификации', max_length=50, null=True, blank=True) 
+    text = models.TextField('Текст сообщения', null=True, blank=True)
+    status = models.IntegerField(choices=STATUS_CHOICES, default=NEW, db_index=True, blank=True)
+    http_code = models.CharField('HTTP Код', max_length=50, null=True, blank=True)
+    xml_response = models.TextField('XML ответ', null=True, blank=True)    
+
+import signals    # @UnusedImport

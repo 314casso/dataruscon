@@ -1,0 +1,5 @@
+{{ subtitle }}{% regroup stock_simple_data by size as stock_simple_data_by_size %}
+{% for item in stock_simple_data_by_size %}
+{{ item.grouper }}:{% for line in item.list %} {{ line.line }}{% endfor %}
+{% endfor %}
+* У - усиленные

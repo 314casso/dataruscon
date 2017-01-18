@@ -3,7 +3,7 @@ from django.conf import settings
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
-from emptystock.views import stockdata, send_email, contacts
+from emptystock.views import stockdata, send_email, contacts, get_sms
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -22,6 +22,7 @@ urlpatterns += patterns('',
     url(r'^$', stockdata, name='stockdata'), 
     url(r'^sendmail/$', send_email, name='sendmail'),
     url(r'^contacts/$', contacts, name='contacts'),
+    url(r'^sms/$', get_sms, name='getsms'),
 )
 
 if settings.DEBUG:

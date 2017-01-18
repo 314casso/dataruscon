@@ -34,5 +34,13 @@ class StockDataService(BaseService):
         for row in rows: 
             parts = row.split()
             result.append({'size': parts[0], 'line': parts[1]})
-        return sorted(result, key=lambda k: k['size']) 
+        return sorted(result, key=lambda k: k['size'])
+    
+    def get_simple_text(self):
+        result = []
+        simple_data = self.get_simple_data()       
+        for row in simple_data:            
+            result.append('%s %s' %(row['size'], row['line']))             
+        return '\n'.join(result)
+             
         

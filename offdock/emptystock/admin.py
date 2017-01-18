@@ -1,5 +1,5 @@
 from django.contrib import admin
-from emptystock.models import Person, Contact
+from emptystock.models import Person, Contact, Sms
 
 
 class ContactInline(admin.TabularInline):
@@ -10,5 +10,10 @@ class ContactInline(admin.TabularInline):
 class PersonAdmin(admin.ModelAdmin):
     inlines = (ContactInline,)
 
+class SmsAdmin(admin.ModelAdmin):
+    pass
+    
+
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Contact)
+admin.site.register(Sms, SmsAdmin)

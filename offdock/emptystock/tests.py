@@ -1,16 +1,26 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
+import requests
+from lxml import etree
+from django.utils.encoding import force_unicode
 
-Replace this with more appropriate tests for your application.
-"""
+r = requests.post('http://127.0.0.1:8000/sms/', auth=('ruscon', 'V5FnWzUdXj'), data={'ordid':98, 'sender':'+79615892001', 'target': '+79615892001', })
+print r.status_code
+print r.text
 
-from django.test import TestCase
 
+# r = requests.post('http://beeline.amega-inform.ru/sendsms/', auth=('KRD_RUSCON1', '9054956328'), data={
+#                                                                                                 'action':'status', 
+#                                                                                                 'sms_id':'725209660', 
+#                                                                                                 'user': 'KRD_RUSCON1', 
+#                                                                                                 'pass': '9054956328'
+#                                                                                                 })
+#  
+# print r.status_code
+# 
+# if r.status_code == 200:
+#     print "OK" 
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
-        """
-        Tests that 1 + 1 always equals 2.
-        """
-        self.assertEqual(1 + 1, 2)
+# 
+# root = etree.fromstring(r.content)
+# print etree.tostring(root, pretty_print=True, encoding='UTF-8')
+# rsl = root.xpath('//SMS_TEXT/text()')
+# print rsl[0]
