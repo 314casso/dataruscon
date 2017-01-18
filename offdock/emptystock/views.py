@@ -74,7 +74,7 @@ def get_sms(request):
                         request.user = user
     
     if not request.user.is_authenticated():
-        return HttpResponse(request.META['HTTP_AUTHORIZATION'], status=401)       
+        return HttpResponse(request.META, status=401)       
       
     form = SmsForm(request.POST)    
     if form.is_valid():
