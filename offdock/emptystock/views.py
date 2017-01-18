@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.template import loader, Context
 from django.core.mail import EmailMessage
 from django.contrib.sites.models import get_current_site
-from emptystock.models import Person
+from emptystock.models import Person, Sms
 from emptystock.forms import SmsForm
 import base64
 from django.http import HttpResponse
@@ -95,14 +95,19 @@ def get_sms(request):
     if not request.user.is_authenticated():        
         logger.error(request.META)
         logger.error(request.POST)
-        return HttpResponse(request.META, status=401)       
-      
-    form = SmsForm(request.POST)    
-    if form.is_valid():
-        form.save()     
+        return HttpResponse(request.META, status=401)     
+    try:
+        Sms.objects.create(agtid=request.POST.get('AGTID', None), 
+                          sender=request.POST.get('SENDER', None), 
+                          text=request.POST.get('TEXT', None), 
+                          smsid=request.POST.get('SMSID', None), 
+                          inbox=request.POST.get('INBOX', None), 
+                          rescount=request.POST.get('RESCOUNT', None), 
+                          target=request.POST.get('TARGET', None)
+                          )
         return HttpResponse('Accepted', status=202)
-    else:
-        form_errors = u'\n'.join([u'\n'.join(errors) for field, errors in form.errors.items()]) # @UnusedVariable
-        logger.error(form_errors)
-        return HttpResponse(form_errors, status=422)  
+    except Exception as e:
+        logger.error(e.message)
+        return HttpResponse(e.message, status=422)    
+    
     return HttpResponse('Bad Request', status=400)    
