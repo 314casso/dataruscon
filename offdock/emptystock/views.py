@@ -15,6 +15,10 @@ from emptystock.forms import SmsForm
 import base64
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
+import logging
+
+
+logger = logging.getLogger('django.request')
 
 
 def stockdata(request):    
@@ -88,9 +92,7 @@ def get_sms(request):
         if login == SMS_SERVICE['emptystock']['USER']:
             authenticate_user(login, SMS_SERVICE['emptystock']['PASSWORD'], request)
     
-    if not request.user.is_authenticated():
-        import logging
-        logger = logging.getLogger('django.request')
+    if not request.user.is_authenticated():        
         logger.error(request.META)
         logger.error(request.POST)
         return HttpResponse(request.META, status=401)       
@@ -100,5 +102,7 @@ def get_sms(request):
         form.save()     
         return HttpResponse('Accepted', status=202)
     else:
-        return HttpResponse(u'\n'.join([u'\n'.join(errors) for field, errors in form.errors.items()]), status=422)  # @UnusedVariable
+        form_errors = u'\n'.join([u'\n'.join(errors) for field, errors in form.errors.items()]) # @UnusedVariable
+        logger.error(form_errors)
+        return HttpResponse(form_errors, status=422)  
     return HttpResponse('Bad Request', status=400)    
