@@ -38,7 +38,7 @@ def send_sms_reply(sender, instance, **kwargs):
                                                     'stock_simple_data': simple_data,
                                                     'subtitle' : force_unicode('Прием порожних на РУСКОН {:%d/%m/%Y %H:%M}'.format(datetime.now()))
                                                     })
-        elif first_num == 0:
+        else:
             rendered = u'Ваш SMS запрос "%s" не распознан. Доступные коды:\n1 - Прием порожних' % instance.text
                   
         r = sendsms(rendered, instance.sender, 'emptystock')
