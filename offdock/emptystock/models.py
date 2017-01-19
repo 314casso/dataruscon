@@ -57,7 +57,7 @@ class Sms(models.Model):
     )
       
     date = models.DateTimeField(auto_now_add=True, blank=True)     
-    smsid = models.CharField('SMS ID', max_length=50, db_index=True) 
+    smsid = models.CharField('SMS ID', max_length=50, db_index=True, unique=True) 
     agtid = models.CharField('AGT ID', max_length=50, null=True, blank=True) 
     inbox = models.CharField('ID входящего ящика', max_length=255, null=True, blank=True) 
     sender = models.CharField('Номер отправителя', max_length=255)
@@ -66,6 +66,9 @@ class Sms(models.Model):
     text = models.TextField('Текст сообщения', null=True, blank=True)
     status = models.IntegerField(choices=STATUS_CHOICES, default=NEW, db_index=True, blank=True)
     http_code = models.CharField('HTTP Код', max_length=50, null=True, blank=True)
-    xml_response = models.TextField('XML ответ', null=True, blank=True)    
+    xml_response = models.TextField('XML ответ', null=True, blank=True)  
+    
+    def __unicode__(self):
+        return u'{0}'.format(self.smsid)  
 
 import signals    # @UnusedImport

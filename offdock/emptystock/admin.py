@@ -11,7 +11,8 @@ class PersonAdmin(admin.ModelAdmin):
     inlines = (ContactInline,)
 
 class SmsAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('smsid', 'date', 'sender', 'text', 'status', 'http_code')
+    search_fields = ['smsid', 'sender', 'text']
     
 
 admin.site.register(Person, PersonAdmin)
