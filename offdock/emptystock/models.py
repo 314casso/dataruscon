@@ -2,7 +2,7 @@
 from django.db import models
 import os
 from django.utils.encoding import force_unicode 
-import datetime
+from django.utils import timezone
 
 def get_upload_path(instance, filename):
     return os.path.join(
@@ -57,7 +57,7 @@ class Sms(models.Model):
         (ERROR, force_unicode('Обшибка')),        
     )
       
-    date = models.DateTimeField(default=datetime.datetime.now, blank=True)     
+    date = models.DateTimeField(default=timezone.now, blank=True)     
     smsid = models.CharField('SMS ID', max_length=50, db_index=True, unique=True) 
     agtid = models.CharField('AGT ID', max_length=50, null=True, blank=True) 
     inbox = models.CharField('ID входящего ящика', max_length=255, null=True, blank=True) 
