@@ -107,6 +107,8 @@ def get_sms(request):
                           )
         return HttpResponse('Accepted', status=202)
     except Exception as e:
+        logger.error(request.META)
+        logger.error(request.POST)
         logger.error(e.message)
         return HttpResponse(e.message, status=422)    
     
