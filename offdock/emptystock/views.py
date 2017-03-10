@@ -96,12 +96,12 @@ def get_sms(request):
         logger.error(request.META)
         logger.error(request.POST)
         return HttpResponse(request.META, status=401)     
-    try:
-        Sms.objects.create(agtid=request.POST.get('AGTID', None), 
+    try:       
+        Sms.objects.create(agtid=request.POST.get('CNRID', None), 
                           sender=request.POST.get('SENDER', None), 
                           text=request.POST.get('TEXT', None), 
-                          smsid=request.POST.get('SMSID', None), 
-                          inbox=request.POST.get('INBOX', None), 
+                          smsid=request.POST.get('ORDID', None), 
+                          inbox=request.POST.get('SIBNUM', None), 
                           rescount=request.POST.get('RESCOUNT', None), 
                           target=request.POST.get('TARGET', None)
                           )
