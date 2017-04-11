@@ -119,7 +119,7 @@ def get_sms(request):
 
 
 def statistics(request):       
-    values = Sms.objects.all().extra({'date_created' : "date(date)"}).values('date_created').annotate(created_count=Count('id')).order_by("date_created")
+    values = Sms.objects.filter(text='1', status=Sms.PROCESSED).extra({'date_created' : "date(date)"}).values('date_created').annotate(created_count=Count('id')).order_by("date_created")
     #q = [{str(x['date_created']): x['created_count']} for x in values]
     context = {
                 'values': values,
