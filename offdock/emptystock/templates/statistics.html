@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load cache %} 
+{% block 'content' %}
+
+<h2>{{ subtitle }}</h2>
+
+<table class="table">
+  <tr>
+    <th>Дата</th>
+    <th>Sms</th>
+  </tr>  
+  {% for item in values  %}
+  <tr>
+    <td>{{ item.date_created }}</td>
+    <td>{{ item.created_count }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+	
+ 
+{% endblock 'content' %}
