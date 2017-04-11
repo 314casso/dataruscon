@@ -15,7 +15,10 @@ from emptystock.forms import SmsForm
 import base64
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
+from django.core import serializers
 import logging
+import json
+from django.db.models.aggregates import Count
 
 
 logger = logging.getLogger('django.request')
@@ -112,4 +115,12 @@ def get_sms(request):
         logger.error(e.message)
         return HttpResponse(e.message, status=422)    
     
-    return HttpResponse('Bad Request', status=400)    
+    return HttpResponse('Bad Request', status=400)
+
+
+def statistics(request):       
+    values = Sms.objects.all().extra({'date_created' : "date(date)"}).values('date_created').annotate(created_count=Count('id'))
+    q = [{str(x['date_created']): x['created_count']} for x in values] 
+    return HttpResponse(json.dumps(q), mimetype='application/json')
+    
+        
