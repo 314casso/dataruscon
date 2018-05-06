@@ -2,6 +2,7 @@
 from suds.client import Client
 from __builtin__ import setattr
 import base64
+from suds.transport.https import HttpAuthenticated
 
 
 class BaseService():
@@ -16,7 +17,8 @@ class BaseService():
             "SOAPAction" : "ActionName",
             "Authorization" : "Basic %s" % base64string
         }                
-        self._client = Client(self.url, headers=authenticationHeader)
+        t = HttpAuthenticated(username=self.username, password=self.password)
+        self._client = Client(self.url, headers=authenticationHeader, transport=t, cache=NoCache(), timeout=500)
 
 
 class StockDataService(BaseService):    

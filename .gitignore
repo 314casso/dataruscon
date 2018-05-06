@@ -8,3 +8,11 @@ local_settings.py
 offdock/media/*
 offdock/static/*
 offdock/wsgi.py
+bin
+include
+lib
+local
+pip-selfcheck.json
+README.md
+logs
+
