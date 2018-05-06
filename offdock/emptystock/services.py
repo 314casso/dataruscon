@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from suds.client import Client
+from suds.cache import NoCache
 from __builtin__ import setattr
 import base64
 from suds.transport.https import HttpAuthenticated
