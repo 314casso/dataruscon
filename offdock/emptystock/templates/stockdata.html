@@ -45,7 +45,7 @@
           <li><strong>{{ sizetype.grouper }}</strong>
           <ul>
           {% for row in sizetype.list %}
-            <li>{{ row.line }}  <span class="badge">{{ row.rest|floatformat }}</span></li>       
+            <li>{{ row.line }} <span class="badge badge-primary">{{ row.direction }}</span> <span class="badge">{{ row.rest|floatformat }}</span></li>       
           {% endfor %}
           </ul>          
           </li>
